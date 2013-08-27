@@ -1,6 +1,13 @@
+# backup & tmp
+*~
+*.tmp
+
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+# docs
+doc/
