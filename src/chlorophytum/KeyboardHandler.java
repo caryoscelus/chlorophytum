@@ -30,10 +30,16 @@ import com.badlogic.gdx.*;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * Handles keyboard input using bindings
+ */
 public class KeyboardHandler {
     protected Map<Integer,Boolean> pressed = new HashMap();
     protected Map<Integer,Object> keyActions = new HashMap();
     
+    /**
+     * Run input library code and input bindings
+     */
     public void init () {
         Scripting.run("scripts/base-input.clj");
         Scripting.run("data/scripts/input.clj");
@@ -59,6 +65,11 @@ public class KeyboardHandler {
         }
     }
     
+    /**
+     * Register key action
+     * @param key key code
+     * @param action should be changed to something else, e.g. Invokable
+     */
     public void registerKeyAction (Integer key, Object action) {
         keyActions.put(key, action);
     }

@@ -34,12 +34,20 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+/**
+ * Credits screen.
+ * Probably need to separate view (stage) and screen itself
+ */
 public class CreditsScreen implements Screen {
     protected boolean inited = false;
     protected CreditsData creditsData = new CreditsData();
     
     protected Stage stage;
     
+    /**
+     * What to do when this screen should be exited.
+     * TODO: move this to some super-class?..
+     */
     public Invokable onExit;
     
     @Override
@@ -69,6 +77,11 @@ public class CreditsScreen implements Screen {
     public void dispose () {
     }
     
+    /**
+     * Init.
+     * Loads credits clojure lib and credits script itself
+     * Also inits ui
+     */
     public void init () {
         Scripting.run("scripts/base-credits.clj");
         Scripting.run("data/scripts/credits.clj");
@@ -82,6 +95,9 @@ public class CreditsScreen implements Screen {
         updateUi();
     }
     
+    /**
+     * Build ui
+     */
     protected void updateUi() {
         final Skin skin = UiManager.instance().skin;
         final Table table = new Table();
@@ -127,6 +143,10 @@ public class CreditsScreen implements Screen {
         stage.draw();
     }
     
+    /**
+     * User clicked on stage.
+     * Currently triggers onExit
+     */
     public void processClick () {
         if (onExit != null) {
             onExit.invoke();

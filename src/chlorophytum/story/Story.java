@@ -57,19 +57,34 @@ public class Story {
         trigger("_init");
     }
     
+    /**
+     * Add new named event
+     * @param name new event's name
+     * @param event event itself
+     */
     public void addEvent (String name, StoryEvent event) {
         events.put(name, event);
     }
     
+    /**
+     * Get event by name
+     * @param name name of event
+     * @return event
+     */
     public StoryEvent getEvent (String name) {
         return events.get(name);
     }
     
-    
+    /**
+     * Add StoryObject to story object list
+     */
     public void addObject (String name, StoryObject object) {
         objects.put(name, object);
     }
     
+    /**
+     * Get story object by name
+     */
     public StoryObject getObject (String name) {
         return objects.get(name);
     }

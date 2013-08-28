@@ -25,6 +25,10 @@
 
 package chlorophytum.util;
 
+/**
+ * Just a wrapper around function, cause stupid java
+ * cannot into lambdas..
+ */
 public interface Invokable {
     public void invoke ();
 }

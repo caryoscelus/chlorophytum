@@ -32,6 +32,9 @@ import com.badlogic.gdx.maps.tiled.*;
 
 import java.util.HashSet;
 
+/**
+ * Contains TiledMap and objects placed on it
+ */
 public class ChloroMap implements Disposable {
     public TiledMap map;
     public HashSet<MapObject> objects = new HashSet();
@@ -40,10 +43,16 @@ public class ChloroMap implements Disposable {
         map = tmap;
     }
     
+    /**
+     * Remove object from map
+     */
     public void removeObject (MapObject obj) {
         objects.remove(obj);
     }
     
+    /**
+     * Add object to map
+     */
     public void addObject (MapObject obj) {
         objects.add(obj);
     }

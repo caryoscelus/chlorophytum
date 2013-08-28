@@ -32,10 +32,12 @@ import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.math.*;
-// import com.badlogic.gdx.maps.tiled.*;
 
+/**
+ * Stage for ChloroMap rendering and interaction
+ */
 public class ChloroMapStage extends Stage {
-    public OrthogonalTiledMapRenderer renderer;
+    protected OrthogonalTiledMapRenderer renderer;
     protected OrthographicCamera camera;
     
     protected float tileSize;
@@ -44,6 +46,13 @@ public class ChloroMapStage extends Stage {
     
     protected ChloroMap map;
     
+    /**
+     * init.
+     * Note that tSize should eventually be replaced with width and height
+     * @param tSize float tile size
+     * @param tnX float number of tiles per x
+     * @param tnY float number of tiles per y
+     */
     public void init (float tSize, float tnX, float tnY) {
         tileSize = tSize;
         tilesNX = tnX;
@@ -56,16 +65,30 @@ public class ChloroMapStage extends Stage {
         camera.update();
     }
     
+    /**
+     * Set new map to display
+     * @param newMap new ChloroMap
+     */
     public void setMap (ChloroMap newMap) {
         map = newMap;
         renderer.setMap(map.map);
     }
     
+    /**
+     * Set camera position
+     * @param newPos new position (in tiles)
+     */
     public void setPosition (Vector2 newPos) {
         camera.position.x = newPos.x;
         camera.position.y = newPos.y;
     }
     
+    /**
+     * Get position of camera.
+     * (convert Vector3 to Vector2)
+     * I don't know why it's required to substract 1 from it :/
+     * @return Vector2 camera position
+     */
     public Vector2 getCamPosition() {
         return new Vector2(camera.position.x-1, camera.position.y-1);
     }

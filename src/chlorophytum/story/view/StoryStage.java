@@ -68,7 +68,8 @@ public class StoryStage extends Stage {
     }
     
     /**
-     * Setup storyStage from dialogue
+     * Setup storyStage from dialogue.
+     * This is quite a mess, needs lots of refactoring
      */
     public void setupUi (final StoryDialog dialogue) {
         final Skin skin = UiManager.instance().skin;

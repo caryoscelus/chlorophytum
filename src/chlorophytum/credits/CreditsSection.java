@@ -27,10 +27,16 @@ package chlorophytum.credits;
 
 import java.util.Vector;
 
+/**
+ * Section containing lines of credits
+ */
 public class CreditsSection {
     public final String name;
     public final Vector<Line> authors = new Vector();
     
+    /**
+     * Line of credits
+     */
     public class Line {
         public final String name;
         public final String occupation;
@@ -44,6 +50,10 @@ public class CreditsSection {
         name = nm;
     }
     
+    /**
+     * Add author to section.
+     * It will be appended on the end
+     */
     public void addAuthor (String name, String occupation) {
         authors.add(new Line(name, occupation));
     }

@@ -50,6 +50,12 @@ public class World {
     
     public final HashMap<String,ChloroMap> maps = new HashMap();
     
+    /**
+     * Load map or get it if it's already loaded.
+     * Note that currently name is file name, but
+     * that is likely to be changed
+     * @param name File name of map to load
+     */
     public ChloroMap loadMap (String name) {
         ChloroMap map = maps.get(name);
         if (map == null) {

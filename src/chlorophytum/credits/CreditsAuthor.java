@@ -27,6 +27,9 @@ package chlorophytum.credits;
 
 import java.util.Vector;
 
+/**
+ * Contains info about author, that is name and all occupations
+ */
 public class CreditsAuthor {
     public final String name;
     public final Vector<String> occupations = new Vector();
@@ -40,6 +43,9 @@ public class CreditsAuthor {
         occupations.add(occupation);
     }
     
+    /**
+     * Add occupation for this author
+     */
     public void addOccupation (String occupation) {
         occupations.add(occupation);
     }
