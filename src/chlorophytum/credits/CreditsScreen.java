@@ -27,16 +27,20 @@ package chlorophytum.credits;
 
 import chlorophytum.Scripting;
 import chlorophytum.UiManager;
+import chlorophytum.util.Invokable;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class CreditsScreen implements Screen {
     protected boolean inited = false;
     protected CreditsData creditsData = new CreditsData();
     
     protected Stage stage;
+    
+    public Invokable onExit;
     
     @Override
     public void show () {
@@ -84,6 +88,13 @@ public class CreditsScreen implements Screen {
         table.setFillParent(true);
         
         stage.clear();
+        stage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                processClick();
+            }
+        });
+        Gdx.input.setInputProcessor(stage);
         
         for (CreditsSection section : creditsData.sections) {
             final Label sectionLabel = new Label(section.name, skin);
@@ -114,5 +125,11 @@ public class CreditsScreen implements Screen {
     public void render (float dt) {
         update(dt);
         stage.draw();
+    }
+    
+    public void processClick () {
+        if (onExit != null) {
+            onExit.invoke();
+        }
     }
 }
