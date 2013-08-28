@@ -96,14 +96,13 @@ public class MapObject extends StoryObject {
      */
     public void moveTo (String mapName) {
         Vector2 xy = mapPositions.get(mapName);
-        Gdx.app.log("moveTo", ""+mapName+" "+xy);
         float x, y;
         if (xy != null) {
             x = xy.x;
             y = xy.y;
         } else {
             // this isn't too good :/
-            ChloroMap tmap = new ChloroMap(Loader.instance().loadMap(mapName));
+            ChloroMap tmap = World.instance().loadMap(mapName);
             x = Float.parseFloat(tmap.map.getProperties().get("spawn-x", "0", String.class));
             y = Float.parseFloat(tmap.map.getProperties().get("spawn-y", "0", String.class));
         }
@@ -118,10 +117,15 @@ public class MapObject extends StoryObject {
      */
     public void moveTo (String mapName, float x, float y) {
         if (onMapName != mapName) {
-            Gdx.app.log("moveTo", ""+mapName+" from "+onMapName+" "+position);
+            if (onMap != null) {
+                onMap.removeObject(this);
+            }
+            
             mapPositions.put(onMapName, position.cpy());
             onMapName = mapName;
-            onMap = new ChloroMap(Loader.instance().loadMap(mapName));
+            onMap = World.instance().loadMap(mapName);
+            
+            onMap.addObject(this);
         }
         position.set(x, y);
     }

@@ -26,6 +26,7 @@
 package chlorophytum.map.view;
 
 import chlorophytum.map.ChloroMap;
+import chlorophytum.mapobject.MapObject;
 
 import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -77,5 +78,9 @@ public class ChloroMapStage extends Stage {
         
         renderer.setView(camera);
         renderer.render();
+        
+        for (MapObject obj : map.objects) {
+            obj.render(renderer.getSpriteBatch());
+        }
     }
 }

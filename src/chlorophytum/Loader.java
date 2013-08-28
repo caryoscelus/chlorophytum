@@ -56,7 +56,8 @@ public class Loader {
     }
     
     /**
-     * load map if necessary and return it
+     * load map if necessary and return it.
+     * Use World.loadMap() instaed
      * @param fname relative file name
      */
     public TiledMap loadMap (String fname) {

@@ -26,10 +26,15 @@
 package chlorophytum;
 
 import chlorophytum.story.*;
+import chlorophytum.map.ChloroMap;
+
+import java.util.HashMap;
 
 /**
- * World singleton;
- * Right now contains only Story instance
+ * World singleton.
+ * Contains Story singleton and maps
+ * This doesn't seem good; game doesn't necessery have anything to do
+ * with maps.. but i'll leave it for now
  */
 public class World {
     private static World _instance;
@@ -43,4 +48,14 @@ public class World {
     
     public final Story story = new Story();
     
+    public final HashMap<String,ChloroMap> maps = new HashMap();
+    
+    public ChloroMap loadMap (String name) {
+        ChloroMap map = maps.get(name);
+        if (map == null) {
+            map = new ChloroMap(Loader.instance().loadMap(name));
+            maps.put(name, map);
+        }
+        return map;
+    }
 }

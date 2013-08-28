@@ -30,14 +30,22 @@ import chlorophytum.mapobject.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.maps.tiled.*;
 
-import java.util.Vector;
+import java.util.HashSet;
 
 public class ChloroMap implements Disposable {
     public TiledMap map;
-    protected Vector<MapObject> objects;
+    public HashSet<MapObject> objects = new HashSet();
     
     public ChloroMap (TiledMap tmap) {
         map = tmap;
+    }
+    
+    public void removeObject (MapObject obj) {
+        objects.remove(obj);
+    }
+    
+    public void addObject (MapObject obj) {
+        objects.add(obj);
     }
     
     @Override
