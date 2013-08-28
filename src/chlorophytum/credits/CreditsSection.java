@@ -29,12 +29,12 @@ import java.util.Vector;
 
 public class CreditsSection {
     public final String name;
-    public final Vector<CreditsLine> authors = new Vector();
+    public final Vector<Line> authors = new Vector();
     
-    private class CreditsLine {
+    public class Line {
         public final String name;
         public final String occupation;
-        public CreditsLine (String nm, String occ) {
+        public Line (String nm, String occ) {
             name = nm;
             occupation = occ;
         }
@@ -45,6 +45,6 @@ public class CreditsSection {
     }
     
     public void addAuthor (String name, String occupation) {
-        authors.add(new CreditsLine(name, occupation));
+        authors.add(new Line(name, occupation));
     }
 }

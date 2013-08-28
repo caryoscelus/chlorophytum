@@ -26,9 +26,11 @@
 package chlorophytum.credits;
 
 import chlorophytum.Scripting;
+import chlorophytum.UiManager;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 
 public class CreditsScreen implements Screen {
     protected boolean inited = false;
@@ -73,6 +75,31 @@ public class CreditsScreen implements Screen {
     
     protected void initUi () {
         stage = new Stage();
+        updateUi();
+    }
+    
+    protected void updateUi() {
+        final Skin skin = UiManager.instance().skin;
+        final Table table = new Table();
+        table.setFillParent(true);
+        
+        stage.clear();
+        
+        for (CreditsSection section : creditsData.sections) {
+            final Label sectionLabel = new Label(section.name, skin);
+            table.add(sectionLabel).colspan(2).center().space(20);
+            table.row();
+            
+            for (CreditsSection.Line line : section.authors) {
+                final Label authorLabel = new Label(line.name, skin);
+                final Label occupationLabel = new Label(line.occupation, skin);
+                table.add(authorLabel).right().space(10);
+                table.add(occupationLabel).left().space(10);
+                table.row();
+            }
+        }
+        
+        stage.addActor(table);
     }
     
     /**
