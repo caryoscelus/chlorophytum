@@ -58,6 +58,37 @@ public class MapObject extends StoryObject {
     }
     
     /**
+     * Update this object
+     */
+    public void update(float dt) {
+    }
+    
+    /**
+     * Move to an offset
+     * @param dx float dx
+     * @param dy float dy
+     */
+    public void move (float dx, float dy) {
+        move(new Vector2(dx, dy));
+    }
+    
+    /**
+     * Move to an offset.
+     * This will also call moved method
+     * @param offset Vector2 offset between current position and target
+     */
+    public void move (Vector2 offset) {
+        position.add(offset);
+        moved();
+    }
+    
+    /**
+     * Override this to get notified about movements
+     */
+    public void moved () {
+    }
+    
+    /**
      * Move to specific map.
      * Will use either saved position or get spawn-x and spawn-y properties
      * @param map name of map
