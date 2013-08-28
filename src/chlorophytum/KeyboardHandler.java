@@ -34,6 +34,12 @@ public class KeyboardHandler {
     protected Map<Integer,Boolean> pressed = new HashMap();
     protected Map<Integer,Object> keyActions = new HashMap();
     
+    public void init () {
+        Scripting.run("data/scripts/base-input.clj");
+        Scripting.run("data/scripts/input.clj");
+        Scripting.call("input", "setup-input");
+    }
+    
     /**
      * Logic update
      * @param dt float delta time in seconds
