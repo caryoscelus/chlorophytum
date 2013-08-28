@@ -47,7 +47,7 @@ public class Scripting {
         RT.init();
         
         // libs
-        run("data/scripts/base.clj");
+        run("scripts/base.clj");
     }
     
     /**
@@ -55,11 +55,7 @@ public class Scripting {
      * don't run this before init()
      */
     public static void run (String fname) {
-        try {
-            Compiler.loadFile(fname);
-        } catch (IOException e) {
-            Gdx.app.error("clojure", "can't find file", e);
-        }
+        Compiler.load(Loader.instance().load(fname).reader(), fname, fname);
     }
     
     /**

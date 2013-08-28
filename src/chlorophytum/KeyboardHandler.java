@@ -35,7 +35,7 @@ public class KeyboardHandler {
     protected Map<Integer,Object> keyActions = new HashMap();
     
     public void init () {
-        Scripting.run("data/scripts/base-input.clj");
+        Scripting.run("scripts/base-input.clj");
         Scripting.run("data/scripts/input.clj");
         Scripting.call("input", "setup-input");
     }

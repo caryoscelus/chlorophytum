@@ -70,7 +70,7 @@ public class CreditsScreen implements Screen {
     }
     
     public void init () {
-        Scripting.run("data/scripts/base-credits.clj");
+        Scripting.run("scripts/base-credits.clj");
         Scripting.run("data/scripts/credits.clj");
         Scripting.getVar("credits", "set-data").invoke(creditsData);
         
