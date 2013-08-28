@@ -23,57 +23,25 @@
  *  for the parts of Clojure used as well as that of the covered work.}
  */
 
-package chlorophytum.map.view;
+package chlorophytum.map;
 
-import com.badlogic.gdx.maps.tiled.renderers.*;
-import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.math.*;
+import chlorophytum.mapobject.*;
+
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.maps.tiled.*;
 
-public class MapStage extends Stage {
-    public OrthogonalTiledMapRenderer renderer;
-    protected OrthographicCamera camera;
+import java.util.Vector;
+
+public class ChloroMap implements Disposable {
+    public TiledMap map;
+    protected Vector<MapObject> objects;
     
-    protected float tileSize;
-    protected float tilesNX;
-    protected float tilesNY;
-    
-    protected TiledMap map;
-    
-    public void init (float tSize, float tnX, float tnY) {
-        tileSize = tSize;
-        tilesNX = tnX;
-        tilesNY = tnY;
-        
-        renderer = new OrthogonalTiledMapRenderer(null, 1 / tileSize);
-        
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, tilesNX, tilesNY);
-        camera.update();
-    }
-    
-    public void setMap (TiledMap newMap) {
-        map = newMap;
-        renderer.setMap(map);
-    }
-    
-    public void setPosition (Vector2 newPos) {
-        camera.position.x = newPos.x;
-        camera.position.y = newPos.y;
-    }
-    
-    public Vector2 getCamPosition() {
-        return new Vector2(camera.position.x-1, camera.position.y-1);
+    public ChloroMap (TiledMap tmap) {
+        map = tmap;
     }
     
     @Override
-    public void draw () {
-        super.draw();
-        
-        camera.update();
-        
-        renderer.setView(camera);
-        renderer.render();
+    public void dispose () {
+        map.dispose();
     }
 }

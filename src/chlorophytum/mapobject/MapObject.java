@@ -26,6 +26,7 @@
 package chlorophytum.mapobject;
 
 import chlorophytum.*;
+import chlorophytum.map.*;
 import chlorophytum.story.*;
 
 import com.badlogic.gdx.Gdx;
@@ -43,7 +44,7 @@ import java.util.HashMap;
  * Needs lots of cleaning
  */
 public class MapObject extends StoryObject {
-    public TiledMap onMap = null;
+    public ChloroMap onMap = null;
     public String onMapName = null;
     public final Vector2 position = new Vector2();
     public final Vector2 move = new Vector2();
@@ -91,47 +92,47 @@ public class MapObject extends StoryObject {
     /**
      * Move to specific map.
      * Will use either saved position or get spawn-x and spawn-y properties
-     * @param map name of map
+     * @param mapName name of map
      */
-    public void moveTo (String map) {
-        Vector2 xy = mapPositions.get(map);
-        Gdx.app.log("moveTo", ""+map+" "+xy);
+    public void moveTo (String mapName) {
+        Vector2 xy = mapPositions.get(mapName);
+        Gdx.app.log("moveTo", ""+mapName+" "+xy);
         float x, y;
         if (xy != null) {
             x = xy.x;
             y = xy.y;
         } else {
             // this isn't too good :/
-            TiledMap tmap = Loader.instance().loadMap(map);
-            x = Float.parseFloat(tmap.getProperties().get("spawn-x", "0", String.class));
-            y = Float.parseFloat(tmap.getProperties().get("spawn-y", "0", String.class));
+            ChloroMap tmap = new ChloroMap(Loader.instance().loadMap(mapName));
+            x = Float.parseFloat(tmap.map.getProperties().get("spawn-x", "0", String.class));
+            y = Float.parseFloat(tmap.map.getProperties().get("spawn-y", "0", String.class));
         }
-        moveTo(map, x, y);
+        moveTo(mapName, x, y);
     }
     
     /**
      * Move to specific map and position
-     * @param map name of map
+     * @param mapName name of map
      * @param x x-coordinate on new map
      * @param y y-coordinate on new map
      */
-    public void moveTo (String map, float x, float y) {
-        if (onMapName != map) {
-            Gdx.app.log("moveTo", ""+map+" from "+onMapName+" "+position);
+    public void moveTo (String mapName, float x, float y) {
+        if (onMapName != mapName) {
+            Gdx.app.log("moveTo", ""+mapName+" from "+onMapName+" "+position);
             mapPositions.put(onMapName, position.cpy());
-            onMapName = map;
-            onMap = Loader.instance().loadMap(map);
+            onMapName = mapName;
+            onMap = new ChloroMap(Loader.instance().loadMap(mapName));
         }
         position.set(x, y);
     }
     
     /**
      * Move to specific map and position
-     * @param map name of map
+     * @param mapName name of map
      * @param xy new position
      */
-    public void moveTo (String map, Vector2 xy) {
-        moveTo(map, xy.x, xy.y);
+    public void moveTo (String mapName, Vector2 xy) {
+        moveTo(mapName, xy.x, xy.y);
     }
     
     /**
@@ -158,7 +159,7 @@ public class MapObject extends StoryObject {
      */
     protected TiledMapTile getTile (int lid, float dx, float dy) {
         if (onMap != null) {
-            TiledMapTileLayer layer = (TiledMapTileLayer) onMap.getLayers().get(lid);
+            TiledMapTileLayer layer = (TiledMapTileLayer) onMap.map.getLayers().get(lid);
             return getTile(layer, dx, dy);
         }
         return null;
@@ -172,7 +173,7 @@ public class MapObject extends StoryObject {
      */
     protected TiledMapTile getTile (String name, float dx, float dy) {
         if (onMap != null) {
-            TiledMapTileLayer layer = (TiledMapTileLayer) onMap.getLayers().get(name);
+            TiledMapTileLayer layer = (TiledMapTileLayer) onMap.map.getLayers().get(name);
             return getTile(layer, dx, dy);
         }
         return null;
