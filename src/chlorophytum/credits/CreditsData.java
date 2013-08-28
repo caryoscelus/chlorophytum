@@ -23,61 +23,40 @@
  *  for the parts of Clojure used as well as that of the covered work.}
  */
 
-package chlorophytum;
+package chlorophytum.credits;
 
-import com.badlogic.gdx.Gdx;
-
-import clojure.lang.RT;
-import clojure.lang.Var;
-import clojure.lang.Compiler;
-
-import java.io.IOException;
+import java.util.Vector;
+import java.util.HashMap;
 
 /**
- * Script manager.
- * Now static class.. Maybe make singleton? 
+ * Stores data for credits
  */
-public class Scripting {
+public class CreditsData {
+    public Vector<CreditsSection> sections = new Vector();
+    public HashMap<String,CreditsAuthor> authors = new HashMap();
+    
     /**
-     * init
+     * Add new section.
+     * Note that it will be added in the end and all
+     * addAuthor() called will append to it
+     * @param name String name of new section
      */
-    public static void init () {
-        // if this removed, crash occurs..; could be replaced by access to
-        // any static member of RT though
-        RT.init();
-        
-        // libs
-        run("data/scripts/base.clj");
+    public void addSection (String name) {
+        sections.add(new CreditsSection(name));
     }
     
     /**
-     * Run script with fname
-     * don't run this before init()
+     * Add author to latest section.
+     * It will also be stored in authors list
+     * @param name String author name
+     * @param occupation String what author did in this section
      */
-    public static void run (String fname) {
-        try {
-            Compiler.loadFile(fname);
-        } catch (IOException e) {
-            Gdx.app.error("clojure", "can't find file", e);
+    public void addAuthor (String name, String occupation) {
+        if (authors.get(name) != null) {
+            authors.get(name).addOccupation(occupation);
+        } else {
+            authors.put(name, new CreditsAuthor(name, occupation));
         }
-    }
-    
-    /**
-     * Get variable from clojure
-     */
-    public static Var getVar (String ns, String var) {
-        return RT.var(ns, var);
-    }
-    
-    /**
-     * Call clojure function "var" from namespace "ns"
-     * No argument passing available atm
-     */
-    public static Object call (String ns, String var) {
-        return getVar(ns, var).invoke();
-    }
-    
-    public static Object call (Object var) {
-        return ((clojure.lang.AFn)var).invoke();
+        sections.lastElement().addAuthor(name, occupation);
     }
 }

@@ -23,61 +23,69 @@
  *  for the parts of Clojure used as well as that of the covered work.}
  */
 
-package chlorophytum;
+package chlorophytum.credits;
 
-import com.badlogic.gdx.Gdx;
+import chlorophytum.Scripting;
 
-import clojure.lang.RT;
-import clojure.lang.Var;
-import clojure.lang.Compiler;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.scenes.scene2d.*;
 
-import java.io.IOException;
-
-/**
- * Script manager.
- * Now static class.. Maybe make singleton? 
- */
-public class Scripting {
-    /**
-     * init
-     */
-    public static void init () {
-        // if this removed, crash occurs..; could be replaced by access to
-        // any static member of RT though
-        RT.init();
-        
-        // libs
-        run("data/scripts/base.clj");
-    }
+public class CreditsScreen implements Screen {
+    protected boolean inited = false;
+    protected CreditsData creditsData = new CreditsData();
     
-    /**
-     * Run script with fname
-     * don't run this before init()
-     */
-    public static void run (String fname) {
-        try {
-            Compiler.loadFile(fname);
-        } catch (IOException e) {
-            Gdx.app.error("clojure", "can't find file", e);
+    protected Stage stage;
+    
+    @Override
+    public void show () {
+        if (!inited) {
+            init();
         }
     }
     
-    /**
-     * Get variable from clojure
-     */
-    public static Var getVar (String ns, String var) {
-        return RT.var(ns, var);
+    @Override
+    public void hide () {
+    }
+    
+     @Override
+    public void resize (int width, int height) {
+    }
+    
+    @Override
+    public void pause () {
+    }
+    
+    @Override
+    public void resume () {
+    }
+    
+    @Override
+    public void dispose () {
+    }
+    
+    public void init () {
+        Scripting.run("data/scripts/base-credits.clj");
+        Scripting.run("data/scripts/credits.clj");
+        Scripting.getVar("credits", "set-data").invoke(creditsData);
+        
+        initUi();
+    }
+    
+    protected void initUi () {
+        stage = new Stage();
     }
     
     /**
-     * Call clojure function "var" from namespace "ns"
-     * No argument passing available atm
+     * Logic update
+     * @param dt float delta time in seconds
      */
-    public static Object call (String ns, String var) {
-        return getVar(ns, var).invoke();
+    public void update (float dt) {
+        stage.act(dt);
     }
     
-    public static Object call (Object var) {
-        return ((clojure.lang.AFn)var).invoke();
+    @Override
+    public void render (float dt) {
+        update(dt);
+        stage.draw();
     }
 }

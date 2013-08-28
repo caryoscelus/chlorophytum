@@ -23,61 +23,24 @@
  *  for the parts of Clojure used as well as that of the covered work.}
  */
 
-package chlorophytum;
+package chlorophytum.credits;
 
-import com.badlogic.gdx.Gdx;
+import java.util.Vector;
 
-import clojure.lang.RT;
-import clojure.lang.Var;
-import clojure.lang.Compiler;
-
-import java.io.IOException;
-
-/**
- * Script manager.
- * Now static class.. Maybe make singleton? 
- */
-public class Scripting {
-    /**
-     * init
-     */
-    public static void init () {
-        // if this removed, crash occurs..; could be replaced by access to
-        // any static member of RT though
-        RT.init();
-        
-        // libs
-        run("data/scripts/base.clj");
+public class CreditsAuthor {
+    public final String name;
+    public final Vector<String> occupations = new Vector();
+    
+    public CreditsAuthor (String nm) {
+        name = nm;
     }
     
-    /**
-     * Run script with fname
-     * don't run this before init()
-     */
-    public static void run (String fname) {
-        try {
-            Compiler.loadFile(fname);
-        } catch (IOException e) {
-            Gdx.app.error("clojure", "can't find file", e);
-        }
+    public CreditsAuthor (String nm, String occupation) {
+        name = nm;
+        occupations.add(occupation);
     }
     
-    /**
-     * Get variable from clojure
-     */
-    public static Var getVar (String ns, String var) {
-        return RT.var(ns, var);
-    }
-    
-    /**
-     * Call clojure function "var" from namespace "ns"
-     * No argument passing available atm
-     */
-    public static Object call (String ns, String var) {
-        return getVar(ns, var).invoke();
-    }
-    
-    public static Object call (Object var) {
-        return ((clojure.lang.AFn)var).invoke();
+    public void addOccupation (String occupation) {
+        occupations.add(occupation);
     }
 }
