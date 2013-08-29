@@ -27,8 +27,12 @@ package chlorophytum.map;
 
 import chlorophytum.mapobject.*;
 
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.maps.objects.*;
+import com.badlogic.gdx.math.*;
 
 import java.util.HashSet;
 
@@ -41,6 +45,61 @@ public class ChloroMap implements Disposable {
     
     public ChloroMap (TiledMap tmap) {
         map = tmap;
+        if (map == null) {
+            throw new NullPointerException();
+        }
+    }
+    
+    public MapLayer getLayer (int lid) {
+        return map.getLayers().get(lid);
+    }
+    
+    public MapLayer getLayer (String name) {
+        return map.getLayers().get(name);
+    }
+    
+    protected float tileWidth () {
+        return ((TiledMapTileLayer) map.getLayers().get(0)).getTileWidth();
+    }
+    
+    protected float tileHeight () {
+        return ((TiledMapTileLayer) map.getLayers().get(0)).getTileHeight();
+    }
+    
+    /**
+     * Check if some object overlays some point
+     * @param layerName name of layer to search for objects on
+     * @param point point which object should contain (in tiles)
+     * @return mapobjects that contain given point
+     */
+    // ENJOY JAVA NAMING AND EXPORTING CONVENTIONS!
+    public com.badlogic.gdx.maps.MapObjects checkObjectLayer(String layerName, Vector2 point) {
+        com.badlogic.gdx.maps.MapObjects objs = new com.badlogic.gdx.maps.MapObjects();
+        
+        MapLayer layer = getLayer(layerName);
+        if (layer == null) {
+            Gdx.app.log("chloromap", "can't find layer");
+            return objs;
+        }
+        
+        for (com.badlogic.gdx.maps.MapObject obj : layer.getObjects()) {
+            RectangleMapObject rectObj = (RectangleMapObject) obj;
+            
+            if (rectObj != null) {
+                Rectangle rect = rectObj.getRectangle();
+                rect = new Rectangle(rect.getX()/tileWidth()-1,
+                                     rect.getY()/tileHeight()-1,
+                                     rect.getWidth()/tileWidth(),
+                                     rect.getHeight()/tileHeight()
+                );
+                
+                if (rect.contains(point)) {
+                    objs.add(obj);
+                }
+            }
+        }
+        
+        return objs;
     }
     
     /**

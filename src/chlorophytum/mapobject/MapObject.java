@@ -163,7 +163,7 @@ public class MapObject extends StoryObject {
      */
     protected TiledMapTile getTile (int lid, float dx, float dy) {
         if (onMap != null) {
-            TiledMapTileLayer layer = (TiledMapTileLayer) onMap.map.getLayers().get(lid);
+            TiledMapTileLayer layer = (TiledMapTileLayer) getLayer(lid);
             return getTile(layer, dx, dy);
         }
         return null;
@@ -177,7 +177,7 @@ public class MapObject extends StoryObject {
      */
     protected TiledMapTile getTile (String name, float dx, float dy) {
         if (onMap != null) {
-            TiledMapTileLayer layer = (TiledMapTileLayer) onMap.map.getLayers().get(name);
+            TiledMapTileLayer layer = (TiledMapTileLayer) getLayer(name);
             return getTile(layer, dx, dy);
         }
         return null;
@@ -199,6 +199,22 @@ public class MapObject extends StoryObject {
             }
         }
         return null;
+    }
+    
+    /**
+     * Get layer by lid
+     * @param lid layer id
+     */
+    protected MapLayer getLayer (int lid) {
+        return onMap.map.getLayers().get(lid);
+    }
+    
+    /**
+     * Get layer by name
+     * @param name layer name
+     */
+    protected MapLayer getLayer (String name) {
+        return onMap.map.getLayers().get(name);
     }
     
     /**
