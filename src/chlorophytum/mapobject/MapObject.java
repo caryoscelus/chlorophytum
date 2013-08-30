@@ -62,6 +62,7 @@ public class MapObject extends StoryObject {
      * Update this object
      */
     public void update(float dt) {
+        viewData.update(dt);
     }
     
     /**
