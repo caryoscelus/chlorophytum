@@ -103,6 +103,8 @@ public class Story {
     public void trigger (StoryEvent event) {
         if (event != null) {
             event.trigger();
+        } else {
+            Gdx.app.log("story", "the storry triggered is null");
         }
     }
     
