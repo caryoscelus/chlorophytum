@@ -103,6 +103,30 @@ public class ChloroMap implements Disposable {
     }
     
     /**
+     * Get named object from layer.
+     * Doesn't correctly work with multiple objects with same name
+     * @param layerName where to search foer object
+     * @param objectName name of object to find
+     * @return object with required name if exist
+     */
+    public com.badlogic.gdx.maps.MapObject getTiledObject (String layerName, String objectName) {
+        MapLayer layer = getLayer(layerName);
+        if (layer == null) {
+            Gdx.app.log("chloromap", "can't find layer");
+            return null;
+        }
+        
+        for (com.badlogic.gdx.maps.MapObject obj : layer.getObjects()) {
+            if (obj.getName().equals(objectName)) {
+                return obj;
+            }
+        }
+        
+        Gdx.app.log("chloromap", "can't find object");
+        return null;
+    }
+    
+    /**
      * Remove object from map
      */
     public void removeObject (MapObject obj) {

@@ -45,11 +45,10 @@ import java.util.HashMap;
  */
 public class MapObject extends StoryObject {
     public ChloroMap onMap = null;
-    public String onMapName = null;
     public final Vector2 position = new Vector2();
     public final Vector2 move = new Vector2();
     
-    protected Map<String, Vector2> mapPositions = new HashMap();
+    protected Map<ChloroMap, Vector2> mapPositions = new HashMap();
     
     protected MapObjectViewData viewData = null;
     protected MapObjectView view = null;
@@ -96,18 +95,7 @@ public class MapObject extends StoryObject {
      * @param mapName name of map
      */
     public void moveTo (String mapName) {
-        Vector2 xy = mapPositions.get(mapName);
-        float x, y;
-        if (xy != null) {
-            x = xy.x;
-            y = xy.y;
-        } else {
-            // this isn't too good :/
-            ChloroMap tmap = World.instance().loadMap(mapName);
-            x = Float.parseFloat(tmap.map.getProperties().get("spawn-x", "0", String.class));
-            y = Float.parseFloat(tmap.map.getProperties().get("spawn-y", "0", String.class));
-        }
-        moveTo(mapName, x, y);
+        moveTo(World.instance().loadMap(mapName));
     }
     
     /**
@@ -117,18 +105,7 @@ public class MapObject extends StoryObject {
      * @param y y-coordinate on new map
      */
     public void moveTo (String mapName, float x, float y) {
-        if (onMapName != mapName) {
-            if (onMap != null) {
-                onMap.removeObject(this);
-            }
-            
-            mapPositions.put(onMapName, position.cpy());
-            onMapName = mapName;
-            onMap = World.instance().loadMap(mapName);
-            
-            onMap.addObject(this);
-        }
-        position.set(x, y);
+        moveTo(World.instance().loadMap(mapName), x, y);
     }
     
     /**
@@ -138,6 +115,37 @@ public class MapObject extends StoryObject {
      */
     public void moveTo (String mapName, Vector2 xy) {
         moveTo(mapName, xy.x, xy.y);
+    }
+    
+    public void moveTo (ChloroMap map) {
+        Vector2 xy = mapPositions.get(map);
+        float x, y;
+        if (xy != null) {
+            x = xy.x;
+            y = xy.y;
+        } else {
+            // this isn't too good :/
+            x = Float.parseFloat(map.map.getProperties().get("spawn-x", "0", String.class));
+            y = Float.parseFloat(map.map.getProperties().get("spawn-y", "0", String.class));
+        }
+        moveTo(map, x, y);
+    }
+    
+    public void moveTo (ChloroMap map, float x, float y) {
+        if (onMap != map) {
+            if (onMap != null) {
+                onMap.removeObject(this);
+            }
+            
+            mapPositions.put(onMap, position.cpy());
+            onMap = map;
+            
+            onMap.addObject(this);
+        }
+        position.set(x, y);
+    }
+    
+    public void moveTo (ChloroMap map, Vector2 xy) {
     }
     
     /**
