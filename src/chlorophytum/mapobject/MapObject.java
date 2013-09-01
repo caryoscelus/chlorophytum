@@ -51,7 +51,10 @@ public class MapObject extends StoryObject {
     protected Map<ChloroMap, Vector2> mapPositions = new HashMap();
     
     protected MapObjectViewData viewData = null;
-    public MapObjectView view = null;
+    
+    public MapObjectView newView () {
+        return new MapObjectView(viewData);
+    }
     
     /**
      * Update this object

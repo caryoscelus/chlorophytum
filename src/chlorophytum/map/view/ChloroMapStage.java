@@ -27,6 +27,7 @@ package chlorophytum.map.view;
 
 import chlorophytum.map.ChloroMap;
 import chlorophytum.mapobject.MapObject;
+import chlorophytum.mapobject.MapObjectView;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.maps.tiled.renderers.*;
@@ -35,7 +36,9 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.*;
 
+import java.util.Set;
 import java.util.HashSet;
+import java.util.HashMap;
 
 /**
  * Stage for ChloroMap rendering and interaction
@@ -45,12 +48,12 @@ public class ChloroMapStage extends Stage {
     protected OrthographicCamera camera;
     
     protected float tileSize;
-    protected float tilesNX;
-    protected float tilesNY;
+    public float tilesNX;
+    public float tilesNY;
     
     protected ChloroMap map;
     
-    protected HashSet<MapObject> objects = new HashSet();
+    protected HashMap<MapObject,MapObjectView> objectViews = new HashMap();
     
     /**
      * init.
@@ -75,17 +78,20 @@ public class ChloroMapStage extends Stage {
      * 
      */
     public void mapChange () {
-        HashSet<MapObject> myOnly = (HashSet<MapObject>) objects.clone();
+        Set<MapObject> myOnly = ((HashMap<MapObject,MapObjectView>) objectViews.clone()).keySet();
         myOnly.removeAll(map.objects);
         HashSet<MapObject> mapOnly = (HashSet<MapObject>) map.objects.clone();
-        mapOnly.removeAll(objects);
+        mapOnly.removeAll(objectViews.keySet());
         
         for (MapObject obj : myOnly) {
-            obj.view.remove();
+            objectViews.get(obj).remove();
+            objectViews.remove(obj);
         }
         
         for (MapObject obj : mapOnly) {
-            addActor(obj.view);
+            MapObjectView view = obj.newView();
+            objectViews.put(obj, view);
+            addActor(view);
         }
     }
     

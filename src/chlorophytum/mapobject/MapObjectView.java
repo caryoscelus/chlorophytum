@@ -36,8 +36,6 @@ import com.badlogic.gdx.math.Vector2;
 public class MapObjectView extends Actor {
     protected static boolean inited = false;
     
-    protected MapObjectViewData data;
-    
     /**
      * Load all required textures, etc
      */
@@ -45,10 +43,13 @@ public class MapObjectView extends Actor {
         inited = true;
     }
     
+    protected MapObjectViewData data;
+    
     public MapObjectView (MapObjectViewData d) {
         data = d;
     }
-    
+
+    @Override
     public void act (float dt) {
         data.update(dt);
         Vector2 pos = data.position();
@@ -56,11 +57,4 @@ public class MapObjectView extends Actor {
         Vector2 size = data.size();
         setSize(size.x, size.y);
     }
-    
-    /**
-     * Render on batch using data
-     * @param batch SpriteBatch to use for rendering
-     * @param data MapObjectViewData to use for rendering
-     */
-//     public void render (SpriteBatch batch, MapObjectViewData data);
 }
