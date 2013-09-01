@@ -72,6 +72,7 @@ public class ChloroMapStage extends Stage {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, tilesNX, tilesNY);
         camera.update();
+        setCamera(camera);
     }
     
     public Vector2 tilesOnMap () {
