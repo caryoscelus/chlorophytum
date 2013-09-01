@@ -82,6 +82,12 @@
                         (first opts))]
            (StoryDialogLine. txt (event act) visible)))
 
+(defmacro redef [var-name value]
+          (list
+              'do
+              (list 'def var-name value)
+              '(run "_update")))
+
 ;; shortcuts
 (def bind add-event)
 (defn t [text & args] (apply make-dialog (concat (list text false) args)))
