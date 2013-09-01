@@ -40,7 +40,7 @@ import java.util.HashSet;
  * Contains TiledMap and objects placed on it
  */
 public class ChloroMap implements Disposable {
-    public TiledMap map;
+    public final TiledMap map;
     public HashSet<MapObject> objects = new HashSet();
     
     public ChloroMap (TiledMap tmap) {
@@ -112,7 +112,7 @@ public class ChloroMap implements Disposable {
     public com.badlogic.gdx.maps.MapObject getTiledObject (String layerName, String objectName) {
         MapLayer layer = getLayer(layerName);
         if (layer == null) {
-            Gdx.app.log("chloromap", "can't find layer");
+            Gdx.app.log("chloromap", "can't find layer for object");
             return null;
         }
         

@@ -27,20 +27,40 @@ package chlorophytum.mapobject;
 
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Represents renderer for map objects
  */
-public interface MapObjectView {
+public class MapObjectView extends Actor {
+    protected static boolean inited = false;
+    
+    protected MapObjectViewData data;
+    
     /**
      * Load all required textures, etc
      */
-    public void init ();
+    public static void init () {
+        inited = true;
+    }
+    
+    public MapObjectView (MapObjectViewData d) {
+        data = d;
+    }
+    
+    public void act (float dt) {
+        data.update(dt);
+        Vector2 pos = data.position();
+        setPosition(pos.x, pos.y);
+        Vector2 size = data.size();
+        setSize(size.x, size.y);
+    }
     
     /**
      * Render on batch using data
      * @param batch SpriteBatch to use for rendering
      * @param data MapObjectViewData to use for rendering
      */
-    public void render (SpriteBatch batch, MapObjectViewData data);
+//     public void render (SpriteBatch batch, MapObjectViewData data);
 }

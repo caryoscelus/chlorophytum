@@ -28,10 +28,14 @@ package chlorophytum.map.view;
 import chlorophytum.map.ChloroMap;
 import chlorophytum.mapobject.MapObject;
 
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.utils.*;
+
+import java.util.HashSet;
 
 /**
  * Stage for ChloroMap rendering and interaction
@@ -45,6 +49,8 @@ public class ChloroMapStage extends Stage {
     protected float tilesNY;
     
     protected ChloroMap map;
+    
+    protected HashSet<MapObject> objects = new HashSet();
     
     /**
      * init.
@@ -63,6 +69,24 @@ public class ChloroMapStage extends Stage {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, tilesNX, tilesNY);
         camera.update();
+    }
+    
+    /**
+     * 
+     */
+    public void mapChange () {
+        HashSet<MapObject> myOnly = (HashSet<MapObject>) objects.clone();
+        myOnly.removeAll(map.objects);
+        HashSet<MapObject> mapOnly = (HashSet<MapObject>) map.objects.clone();
+        mapOnly.removeAll(objects);
+        
+        for (MapObject obj : myOnly) {
+            obj.view.remove();
+        }
+        
+        for (MapObject obj : mapOnly) {
+            addActor(obj.view);
+        }
     }
     
     /**
@@ -95,15 +119,17 @@ public class ChloroMapStage extends Stage {
     
     @Override
     public void draw () {
-        super.draw();
-        
         camera.update();
         
         renderer.setView(camera);
         renderer.render();
         
-        for (MapObject obj : map.objects) {
-            obj.render(renderer.getSpriteBatch());
-        }
+        super.draw();
+    }
+    
+    @Override
+    public void act (float dt) {
+        mapChange();
+        super.act(dt);
     }
 }

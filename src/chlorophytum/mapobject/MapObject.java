@@ -51,11 +51,7 @@ public class MapObject extends StoryObject {
     protected Map<ChloroMap, Vector2> mapPositions = new HashMap();
     
     protected MapObjectViewData viewData = null;
-    protected MapObjectView view = null;
-    
-    public void render (SpriteBatch batch) {
-        view.render(batch, viewData);
-    }
+    public MapObjectView view = null;
     
     /**
      * Update this object

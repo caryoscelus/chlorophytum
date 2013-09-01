@@ -25,9 +25,14 @@
 
 package chlorophytum.mapobject;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Interace for MapObjectView's data
  */
 public interface MapObjectViewData {
     public void update (float dt);
+    
+    public Vector2 position ();
+    public Vector2 size ();
 }
