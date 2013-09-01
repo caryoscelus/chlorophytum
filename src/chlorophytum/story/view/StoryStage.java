@@ -118,6 +118,7 @@ public class StoryStage extends Stage {
                         if (!result) {
                             if (Story.instance().checkExit(dialogue)) {
                                 show = false;
+                                Story.instance().closed();
                             }
                         }
                     }

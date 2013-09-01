@@ -132,4 +132,12 @@ public class Story {
         }
         return true;
     }
+    
+    /**
+     * Dialog was closed..
+     * This is not somethign stricly define, but ok for now..
+     */
+    public void closed () {
+        trigger("_dialogexit");
+    }
 }
