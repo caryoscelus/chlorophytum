@@ -231,4 +231,11 @@ public class MapObject extends StoryObject {
     protected Vector2 getCentre () {
         return new Vector2().set(position).add(1, 1);
     }
+    
+    /**
+     * This map object was clicked
+     */
+    public void clicked () {
+        Gdx.app.log("mapobject", "clicked");
+    }
 }

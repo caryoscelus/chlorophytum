@@ -54,7 +54,7 @@ public class MapObjectView extends Actor {
     public void act (float dt) {
         data.update(dt);
         
-        setPosition(data.position());
-        setSize(data.size());
+        setPosition(data.position().x, data.position().y);
+        setSize(data.size().x, data.size().y);
     }
 }

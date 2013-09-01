@@ -32,6 +32,7 @@ import chlorophytum.mapobject.MapObjectView;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.maps.tiled.renderers.*;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.*;
@@ -93,10 +94,21 @@ public class ChloroMapStage extends Stage {
             objectViews.remove(obj);
         }
         
-        for (MapObject obj : mapOnly) {
+        for (final MapObject obj : mapOnly) {
             MapObjectView view = obj.newView();
             objectViews.put(obj, view);
             addActor(view);
+            view.addListener(new ClickListener () {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+                
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    obj.clicked();
+                }
+            });
         }
     }
     
