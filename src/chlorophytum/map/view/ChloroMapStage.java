@@ -48,8 +48,8 @@ public class ChloroMapStage extends Stage {
     protected OrthographicCamera camera;
     
     protected float tileSize;
-    public float tilesNX;
-    public float tilesNY;
+    protected float tilesNX;
+    protected float tilesNY;
     
     protected ChloroMap map;
     
@@ -72,6 +72,10 @@ public class ChloroMapStage extends Stage {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, tilesNX, tilesNY);
         camera.update();
+    }
+    
+    public Vector2 tilesOnMap () {
+        return new Vector2(tilesNX, tilesNY);
     }
     
     /**

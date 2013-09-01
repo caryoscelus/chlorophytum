@@ -25,6 +25,9 @@
 
 package chlorophytum.mapobject;
 
+import chlorophytum.map.view.ChloroMapStage;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -52,9 +55,16 @@ public class MapObjectView extends Actor {
     @Override
     public void act (float dt) {
         data.update(dt);
-        Vector2 pos = data.position();
+        Vector2 pos = data.position().cpy();
+        Vector2 size = data.size().cpy();
+        
+        ChloroMapStage mapStage = (ChloroMapStage) getStage();
+        if (mapStage != null) {
+            pos.sub(mapStage.getCamPosition()).add(mapStage.tilesOnMap().scl(0.5f));
+        } else {
+            Gdx.app.error("MapObjectView.act", "not on ChloroMapStage, continuing with wrong coords");
+        }
         setPosition(pos.x, pos.y);
-        Vector2 size = data.size();
         setSize(size.x, size.y);
     }
 }
