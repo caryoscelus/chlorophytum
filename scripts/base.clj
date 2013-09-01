@@ -56,6 +56,8 @@
           (nil? action)
             (proxy [StoryEvent] []
                    (trigger [] false))
+          (string? action)
+            (.getEvent (Story/instance) action)
           :else
             action))
 
@@ -64,9 +66,6 @@
                    (fn? new-event) (event new-event)
                    :else new-event)]
            (.addEvent (Story/instance) ename ne)))
-
-(defn get-event [ename]
-      (.getEvent (Story/instance) ename))
 
 (defn object-move [object new-map & xy]
       (cond
@@ -89,7 +88,8 @@
 (defn tr [text & args] (apply make-dialog (concat (list text true) args)))
 (def ln dialog-line)
 (defn lnh [text ev] (ln text ev false))
-(def ev get-event)
+(def ev event)
+(defn run [revent] (.trigger (ev revent)))
 
 
 
