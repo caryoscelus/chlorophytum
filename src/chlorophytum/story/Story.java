@@ -135,7 +135,11 @@ public class Story {
      * Trigger event by name
      */
     public void trigger (String name, StoryContext context) {
-        trigger(getEvent(name), context);
+        if (getEvent(name) == null) {
+            Gdx.app.log("story", "triggered event is null: "+name);
+        } else {
+            trigger(getEvent(name), context);
+        }
     }
     
     /**
@@ -149,7 +153,7 @@ public class Story {
         if (event != null) {
             event.trigger(context);
         } else {
-            Gdx.app.log("story", "the storry triggered is null");
+            Gdx.app.log("story", "triggered event is null");
         }
     }
     
