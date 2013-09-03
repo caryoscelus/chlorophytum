@@ -31,5 +31,9 @@ import com.badlogic.gdx.Gdx;
  * Interface for story events
  */
 public interface StoryEvent {
-    public boolean trigger (StoryContext context);
+    /**
+     * Trigger this event.
+     * @param context Context where this event was triggered
+     */
+    public void trigger (StoryContext context);
 }

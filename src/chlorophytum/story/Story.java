@@ -89,22 +89,23 @@ public class Story {
         return objects.get(name);
     }
     
+    public void trigger (String name) {
+        trigger(name, null);
+    }
     
     /**
      * Trigger event by name
-     * @deprecated
      */
-    public void trigger (String name) {
-        trigger(getEvent(name));
+    public void trigger (String name, StoryContext context) {
+        trigger(getEvent(name), context);
     }
     
     /**
      * Trigger specific event
-     * @deprecated
      */
-    public void trigger (StoryEvent event) {
+    public void trigger (StoryEvent event, StoryContext context) {
         if (event != null) {
-            event.trigger(null);
+            event.trigger(context);
         } else {
             Gdx.app.log("story", "the storry triggered is null");
         }

@@ -26,4 +26,6 @@
 package chlorophytum.story;
 
 public interface StoryContext {
+    public void load (StoryEvent event);
+    public void end ();
 }

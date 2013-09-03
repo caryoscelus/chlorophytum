@@ -123,13 +123,7 @@ public class StoryStage extends Stage {
                 final TextButton button = new TextButton(text, skin);
                 button.addListener(new ChangeListener() {
                     public void changed (ChangeEvent cevent, Actor actor) {
-                        boolean result = event.trigger(storyContext);
-                        if (!result) {
-                            if (Story.instance().checkExit(dialogue)) {
-                                show = false;
-                                Story.instance().closed();
-                            }
-                        }
+                        event.trigger(storyContext);
                     }
                 });
                 winDialog.row();
@@ -143,5 +137,10 @@ public class StoryStage extends Stage {
         table.top();
         
         addActor(table);
+    }
+    
+    public void act (float dt) {
+        super.act(dt);
+        
     }
 }

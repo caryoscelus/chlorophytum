@@ -44,8 +44,8 @@ public class StoryDialog implements StoryEvent {
         text = t;
         options = new Vector();
         add("Close", new StoryEvent() {
-            public boolean trigger (StoryContext context) {
-                return false;
+            public void trigger (StoryContext context) {
+                context.end();
             }
         });
         saveThis = save;
@@ -97,14 +97,11 @@ public class StoryDialog implements StoryEvent {
     
     
     @Override
-    public boolean trigger (StoryContext context) {
-        StoryPiece piece = (StoryPiece) context;
-        if (piece != null) {
-            piece.loadDialog(this);
+    public void trigger (StoryContext context) {
+        if (context != null) {
+            context.load(this);
         } else {
-            // compatibility only
             Story.instance().ui(this);
         }
-        return true;
     }
 }

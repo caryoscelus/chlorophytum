@@ -25,15 +25,32 @@
 
 package chlorophytum.story;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.Vector;
 
 public class StoryPiece implements StoryContext {
     protected String mainText;
     protected Vector<StoryDialogLine> lines;
     
+    public boolean finished = false;
+    
+    public void load (StoryEvent event) {
+        StoryDialog dialog = (StoryDialog) event;
+        if (dialog != null) {
+            loadDialog(dialog);
+        } else {
+            Gdx.app.log("StoryPiece.load", "event is not StoryDialog instance");
+        }
+    }
+    
     public void loadDialog (StoryDialog dialog) {
         mainText = dialog.text;
         lines = dialog.options;
+    }
+    
+    public void end () {
+        finished = true;
     }
     
     public String getText () {

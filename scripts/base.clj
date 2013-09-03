@@ -50,12 +50,13 @@
             (proxy [StoryEvent] []
                     (trigger [context]
                             (let [a (action)]
-                                (if (= a nil)
-                                    false
-                                    a))))
+                                (if (and (= a nil) (not (nil? context)))
+                                    (.end context)))))
           (nil? action)
             (proxy [StoryEvent] []
-                   (trigger [context] false))
+                   (trigger [context]
+                            (if (not (nil? context))
+                                (.end context))))
           (string? action)
             (.getEvent (Story/instance) action)
           :else
