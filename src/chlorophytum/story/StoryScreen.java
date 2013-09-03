@@ -30,5 +30,4 @@ package chlorophytum.story;
  */
 public interface StoryScreen {
     public void showStory (StoryContext context);
-    public void hideStory ();
 }
