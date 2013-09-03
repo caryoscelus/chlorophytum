@@ -124,7 +124,11 @@ public class Story {
     //// Events
     
     public void queue (String name) {
-        trigger (name, newContext());
+        trigger(name, newContext());
+    }
+    
+    public void queue (StoryEvent event) {
+        trigger(event, newContext());
     }
     
     public void trigger (String name) {
@@ -161,19 +165,14 @@ public class Story {
         }
     }
     
-    /**
-     * Dialog was closed..
-     * This is not something strictly defined, but ok for now..
-     */
-    public void closed () {
-        trigger("_dialogexit");
-    }
-    
     public void show () {
-        screen.showStory (activeContext());
+        screen.showStory(activeContext());
     }
     
     public void endContext () {
         contexts.poll();
+        if (contexts.peek() != null) {
+            show();
+        }
     }
 }

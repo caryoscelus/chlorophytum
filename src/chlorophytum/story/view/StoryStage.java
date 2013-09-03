@@ -158,6 +158,7 @@ public class StoryStage extends Stage {
             show = false;
         } else if (storyContext.finished()) {
             show = false;
+            storyContext = null;
         } else {
             if (!show) {
                 setupUi((StoryContext)storyContext);
