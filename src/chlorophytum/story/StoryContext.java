@@ -25,11 +25,5 @@
 
 package chlorophytum.story;
 
-import com.badlogic.gdx.Gdx;
-
-/**
- * Interface for story events
- */
-public interface StoryEvent {
-    public boolean trigger (StoryContext context);
+public interface StoryContext {
 }

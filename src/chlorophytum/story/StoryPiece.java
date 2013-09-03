@@ -25,11 +25,22 @@
 
 package chlorophytum.story;
 
-import com.badlogic.gdx.Gdx;
+import java.util.Vector;
 
-/**
- * Interface for story events
- */
-public interface StoryEvent {
-    public boolean trigger (StoryContext context);
+public class StoryPiece implements StoryContext {
+    protected String mainText;
+    protected Vector<StoryDialogLine> lines;
+    
+    public void loadDialog (StoryDialog dialog) {
+        mainText = dialog.text;
+        lines = dialog.options;
+    }
+    
+    public String getText () {
+        return mainText;
+    }
+    
+    public Vector<StoryDialogLine> getLines () {
+        return lines;
+    }
 }

@@ -92,6 +92,7 @@ public class Story {
     
     /**
      * Trigger event by name
+     * @deprecated
      */
     public void trigger (String name) {
         trigger(getEvent(name));
@@ -99,10 +100,11 @@ public class Story {
     
     /**
      * Trigger specific event
+     * @deprecated
      */
     public void trigger (StoryEvent event) {
         if (event != null) {
-            event.trigger();
+            event.trigger(null);
         } else {
             Gdx.app.log("story", "the storry triggered is null");
         }

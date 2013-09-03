@@ -48,14 +48,14 @@
       (cond
           (fn? action)
             (proxy [StoryEvent] []
-                    (trigger []
+                    (trigger [context]
                             (let [a (action)]
                                 (if (= a nil)
                                     false
                                     a))))
           (nil? action)
             (proxy [StoryEvent] []
-                   (trigger [] false))
+                   (trigger [context] false))
           (string? action)
             (.getEvent (Story/instance) action)
           :else
@@ -95,7 +95,7 @@
 (def ln dialog-line)
 (defn lnh [text ev] (ln text ev false))
 (def ev event)
-(defn run [revent] (.trigger (ev revent)))
+(defn run [revent] (.trigger (ev revent) nil))
 
 
 

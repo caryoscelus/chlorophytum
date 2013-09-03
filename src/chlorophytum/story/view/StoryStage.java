@@ -40,6 +40,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 public class StoryStage extends Stage {
     public boolean show = false;
     
+    public StoryContext storyContext;
+    
     /**
      * Stupid string parser.
      * Removes opening and closing and separate what was between them
@@ -121,7 +123,7 @@ public class StoryStage extends Stage {
                 final TextButton button = new TextButton(text, skin);
                 button.addListener(new ChangeListener() {
                     public void changed (ChangeEvent cevent, Actor actor) {
-                        boolean result = event.trigger();
+                        boolean result = event.trigger(storyContext);
                         if (!result) {
                             if (Story.instance().checkExit(dialogue)) {
                                 show = false;
