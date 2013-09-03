@@ -116,7 +116,7 @@ public class Story {
      * @return newly created context
      */
     public StoryContext newContext () {
-        StoryContext c = new StoryContext();
+        StoryContext c = new StoryContext(this);
         contexts.add(c);
         return c;
     }
@@ -167,5 +167,9 @@ public class Story {
      */
     public void closed () {
         trigger("_dialogexit");
+    }
+    
+    public void show () {
+        screen.showStory (activeContext());
     }
 }

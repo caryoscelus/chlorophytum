@@ -104,7 +104,6 @@ public class StoryDialog implements StoryEvent {
             throw new NullPointerException();
         }
         if (context != null) {
-            context.begin();
             context.load(this);
         }
     }

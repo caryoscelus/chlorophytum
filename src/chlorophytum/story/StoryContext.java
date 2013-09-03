@@ -42,7 +42,13 @@ public class StoryContext {
     protected String mainText = "";
     protected Vector<StoryDialogLine> lines = new Vector();
     
-    public boolean isFinished = true;
+    public boolean isFinished = false;
+    
+    protected Story story;
+    
+    public StoryContext (Story s) {
+        story = s;
+    }
     
     public void load (StoryEvent event) {
         StoryDialog dialog = (StoryDialog) event;
@@ -57,10 +63,6 @@ public class StoryContext {
         return isFinished;
     }
     
-    public void begin () {
-        isFinished = false;
-    }
-    
     public void end () {
         isFinished = true;
     }
@@ -68,6 +70,7 @@ public class StoryContext {
     public void loadDialog (StoryDialog dialog) {
         mainText = dialog.text;
         lines = dialog.options;
+        story.show();
     }
     
     public String getText () {

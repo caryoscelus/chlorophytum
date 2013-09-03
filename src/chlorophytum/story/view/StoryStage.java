@@ -93,11 +93,10 @@ public class StoryStage extends Stage {
         }
         
         storyContext = context;
-        StoryContext piece = (StoryContext) context;
-        if (piece != null) {
-            setupUi(piece);
+        if (context != null) {
+            setupUi(context);
+            show = true;
         }
-        show = true;
     }
     
     /**
