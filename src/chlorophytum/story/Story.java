@@ -31,6 +31,7 @@ import com.badlogic.gdx.Gdx;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * Story is singleton storing named objects and events
@@ -51,7 +52,7 @@ public class Story {
     
     public StoryScreen screen;
     
-    public StoryContext mainContext = new StoryPiece();
+    protected LinkedList<StoryContext> contexts = new LinkedList();
     
     /**
      * Init: load scripts and run their init
@@ -60,6 +61,9 @@ public class Story {
         Scripting.run("data/scripts/story.clj");
         trigger("_init");
     }
+    
+    
+    //// Object storing
     
     /**
      * Add new named event
@@ -93,6 +97,32 @@ public class Story {
         return objects.get(name);
     }
     
+    
+    //// Contexts
+    
+    /**
+     * @return currently active context
+     */
+    public StoryContext activeContext () {
+        StoryContext c = contexts.peek();
+        if (c == null) {
+            return newContext();
+        }
+        return c;
+    }
+    
+    /**
+     * Creates new context and adds it to queue of contexts
+     * @return newly created context
+     */
+    public StoryContext newContext () {
+        StoryContext c = new StoryContext();
+        contexts.add(c);
+        return c;
+    }
+    
+    //// Events
+    
     public void trigger (String name) {
         trigger(name, null);
     }
@@ -113,7 +143,7 @@ public class Story {
      */
     public void trigger (StoryEvent event, StoryContext context) {
         if (context == null) {
-            context = mainContext;
+            context = activeContext();
         }
         
         if (event != null) {
@@ -124,16 +154,8 @@ public class Story {
     }
     
     /**
-     * Check whether we should exit or just return to some previous dialogue
-     * @deprecated
-     */
-    public boolean checkExit (StoryDialog dialogue) {
-        return true;
-    }
-    
-    /**
      * Dialog was closed..
-     * This is not somethign stricly define, but ok for now..
+     * This is not something strictly defined, but ok for now..
      */
     public void closed () {
         trigger("_dialogexit");

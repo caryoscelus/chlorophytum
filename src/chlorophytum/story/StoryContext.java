@@ -25,14 +25,56 @@
 
 package chlorophytum.story;
 
-public interface StoryContext {
-    public void load (StoryEvent event);
+import com.badlogic.gdx.Gdx;
+
+import java.util.Vector;
+
+/**
+ * Context in which story is run.
+ * Most calls inside it should retain in it.
+ * The problem is how to have possibility to have
+ * multiple contexts, but not specify it every time.
+ * Maybe limit to one active?
+ * That way we'll need two functions: use active context
+ * and create new..
+ */
+public class StoryContext {
+    protected String mainText = "";
+    protected Vector<StoryDialogLine> lines = new Vector();
     
-    /**
-     * @deprecated
-     */
-    public void begin ();
+    public boolean isFinished = true;
     
-    public void end ();
-    public boolean finished ();
+    public void load (StoryEvent event) {
+        StoryDialog dialog = (StoryDialog) event;
+        if (dialog != null) {
+            loadDialog(dialog);
+        } else {
+            Gdx.app.log("StoryContext.load", "event is not StoryDialog instance");
+        }
+    }
+    
+    public boolean finished () {
+        return isFinished;
+    }
+    
+    public void begin () {
+        isFinished = false;
+    }
+    
+    public void end () {
+        isFinished = true;
+    }
+    
+    public void loadDialog (StoryDialog dialog) {
+        mainText = dialog.text;
+        lines = dialog.options;
+    }
+    
+    public String getText () {
+        return mainText;
+    }
+    
+    public Vector<StoryDialogLine> getLines () {
+        return lines;
+    }
 }

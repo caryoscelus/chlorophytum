@@ -93,7 +93,7 @@ public class StoryStage extends Stage {
         }
         
         storyContext = context;
-        StoryPiece piece = (StoryPiece) context;
+        StoryContext piece = (StoryContext) context;
         if (piece != null) {
             setupUi(piece);
         }
@@ -104,7 +104,7 @@ public class StoryStage extends Stage {
      * Setup storyStage from dialogue.
      * This is quite a mess, needs lots of refactoring
      */
-    protected void setupUi (StoryPiece piece) {
+    protected void setupUi (StoryContext piece) {
         final Skin skin = UiManager.instance().skin;
         final Table table = new Table();
         table.setFillParent(true);
@@ -161,7 +161,7 @@ public class StoryStage extends Stage {
             show = false;
         } else {
             if (!show) {
-                setupUi((StoryPiece)storyContext);
+                setupUi((StoryContext)storyContext);
                 show = true;
             }
         }

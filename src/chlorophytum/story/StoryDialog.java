@@ -100,7 +100,6 @@ public class StoryDialog implements StoryEvent {
     
     @Override
     public void trigger (StoryContext context) {
-        Gdx.app.log("StoryDialog", "trigger "+(context!=null));
         if (context == null) {
             throw new NullPointerException();
         }
