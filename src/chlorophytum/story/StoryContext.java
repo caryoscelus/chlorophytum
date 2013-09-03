@@ -65,6 +65,7 @@ public class StoryContext {
     
     public void end () {
         isFinished = true;
+        story.endContext();
     }
     
     public void loadDialog (StoryDialog dialog) {

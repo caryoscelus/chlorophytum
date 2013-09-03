@@ -172,4 +172,8 @@ public class Story {
     public void show () {
         screen.showStory (activeContext());
     }
+    
+    public void endContext () {
+        contexts.poll();
+    }
 }
