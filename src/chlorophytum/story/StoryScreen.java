@@ -29,6 +29,6 @@ package chlorophytum.story;
  * Interface for screens capable of story displaying
  */
 public interface StoryScreen {
-    public void showStory (StoryDialog dialogue);
+    public void showStory (StoryContext context);
     public void hideStory ();
 }

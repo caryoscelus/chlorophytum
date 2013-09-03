@@ -27,5 +27,12 @@ package chlorophytum.story;
 
 public interface StoryContext {
     public void load (StoryEvent event);
+    
+    /**
+     * @deprecated
+     */
+    public void begin ();
+    
     public void end ();
+    public boolean finished ();
 }

@@ -30,11 +30,12 @@ import com.badlogic.gdx.Gdx;
 import java.util.Vector;
 
 public class StoryPiece implements StoryContext {
-    protected String mainText;
-    protected Vector<StoryDialogLine> lines;
+    protected String mainText = "";
+    protected Vector<StoryDialogLine> lines = new Vector();
     
-    public boolean finished = false;
+    public boolean isFinished = true;
     
+    @Override
     public void load (StoryEvent event) {
         StoryDialog dialog = (StoryDialog) event;
         if (dialog != null) {
@@ -44,13 +45,24 @@ public class StoryPiece implements StoryContext {
         }
     }
     
+    @Override
+    public boolean finished () {
+        return isFinished;
+    }
+    
+    @Override
+    public void begin () {
+        isFinished = false;
+    }
+    
+    @Override
+    public void end () {
+        isFinished = true;
+    }
+    
     public void loadDialog (StoryDialog dialog) {
         mainText = dialog.text;
         lines = dialog.options;
-    }
-    
-    public void end () {
-        finished = true;
     }
     
     public String getText () {

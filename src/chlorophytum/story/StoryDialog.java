@@ -25,6 +25,8 @@
 
 package chlorophytum.story;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.Vector;
 
 /**
@@ -98,10 +100,13 @@ public class StoryDialog implements StoryEvent {
     
     @Override
     public void trigger (StoryContext context) {
+        Gdx.app.log("StoryDialog", "trigger "+(context!=null));
+        if (context == null) {
+            throw new NullPointerException();
+        }
         if (context != null) {
+            context.begin();
             context.load(this);
-        } else {
-            Story.instance().ui(this);
         }
     }
 }

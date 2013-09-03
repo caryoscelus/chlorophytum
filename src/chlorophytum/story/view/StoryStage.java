@@ -87,11 +87,24 @@ public class StoryStage extends Stage {
         return t;
     }
     
+    public void setContext (StoryContext context) {
+        if (context == null) {
+            Gdx.app.error("setContext", "context is null");
+        }
+        
+        storyContext = context;
+        StoryPiece piece = (StoryPiece) context;
+        if (piece != null) {
+            setupUi(piece);
+        }
+        show = true;
+    }
+    
     /**
      * Setup storyStage from dialogue.
      * This is quite a mess, needs lots of refactoring
      */
-    public void setupUi (final StoryDialog dialogue) {
+    protected void setupUi (StoryPiece piece) {
         final Skin skin = UiManager.instance().skin;
         final Table table = new Table();
         table.setFillParent(true);
@@ -99,7 +112,7 @@ public class StoryStage extends Stage {
         final Window winDialog = new Window("----", skin);
         table.add(winDialog).width(600).height(400);
         
-        String[] parsed = parseAll(dialogue.text);
+        String[] parsed = parseAll(piece.getText());
         
         String labelText = parsed[0];
         String img = parsed[1];
@@ -115,7 +128,7 @@ public class StoryStage extends Stage {
         winDialog.add(label).space(6).pad(2).expand().fillX().top().left();
         
         // dialogue options
-        for (StoryDialogLine line : dialogue.options) {
+        for (StoryDialogLine line : piece.getLines()) {
             if (line.visible) {
                 final String text = line.text;
                 final StoryEvent event = line.event;
@@ -142,5 +155,15 @@ public class StoryStage extends Stage {
     public void act (float dt) {
         super.act(dt);
         
+        if (storyContext == null) {
+            show = false;
+        } else if (storyContext.finished()) {
+            show = false;
+        } else {
+            if (!show) {
+                setupUi((StoryPiece)storyContext);
+                show = true;
+            }
+        }
     }
 }

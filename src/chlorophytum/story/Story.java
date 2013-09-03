@@ -36,18 +36,22 @@ import java.util.HashMap;
  * Story is singleton storing named objects and events
  */
 public class Story {
-    Map<String, StoryObject> objects = new HashMap();
-    Map<String, StoryEvent> events = new HashMap();
-    
-    StoryDialog saved = null;
-    
-    public StoryScreen screen;
-    
-    
     public static Story instance () {
         return World.instance().story;
     }
     
+    
+    protected Map<String, StoryObject> objects = new HashMap();
+    protected Map<String, StoryEvent> events = new HashMap();
+    
+    /**
+     * @deprecated
+     */
+    protected StoryDialog saved = null;
+    
+    public StoryScreen screen;
+    
+    public StoryContext mainContext = new StoryPiece();
     
     /**
      * Init: load scripts and run their init
@@ -93,6 +97,10 @@ public class Story {
         trigger(name, null);
     }
     
+    public void trigger (StoryEvent event) {
+        trigger(event, null);
+    }
+    
     /**
      * Trigger event by name
      */
@@ -104,6 +112,10 @@ public class Story {
      * Trigger specific event
      */
     public void trigger (StoryEvent event, StoryContext context) {
+        if (context == null) {
+            context = mainContext;
+        }
+        
         if (event != null) {
             event.trigger(context);
         } else {
@@ -111,28 +123,11 @@ public class Story {
         }
     }
     
-    
-    /**
-     * Show dialogue through screen
-     */
-    public void ui (StoryDialog dialogue) {
-        if (dialogue.saveThis) {
-            saved = dialogue;
-        }
-        
-        if (screen != null) {
-            screen.showStory(dialogue);
-        }
-    }
-    
     /**
      * Check whether we should exit or just return to some previous dialogue
+     * @deprecated
      */
     public boolean checkExit (StoryDialog dialogue) {
-        if (saved != null && saved != dialogue) {
-            ui(saved);
-            return false;
-        }
         return true;
     }
     

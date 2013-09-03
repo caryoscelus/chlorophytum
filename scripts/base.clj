@@ -50,7 +50,7 @@
             (proxy [StoryEvent] []
                     (trigger [context]
                             (let [a (action)]
-                                (if (and (= a nil) (not (nil? context)))
+                                (if (and (= a false) (not (nil? context)))
                                     (.end context)))))
           (nil? action)
             (proxy [StoryEvent] []
@@ -96,7 +96,7 @@
 (def ln dialog-line)
 (defn lnh [text ev] (ln text ev false))
 (def ev event)
-(defn run [revent] (.trigger (ev revent) nil))
+(defn run [revent] (.trigger (Story/instance) (ev revent)))
 
 
 
