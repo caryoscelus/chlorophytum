@@ -123,6 +123,10 @@ public class Story {
     
     //// Events
     
+    public void queue (String name) {
+        trigger (name, newContext());
+    }
+    
     public void trigger (String name) {
         trigger(name, null);
     }

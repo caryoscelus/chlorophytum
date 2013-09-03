@@ -100,6 +100,7 @@
 (defmacro lnhf [text & code-lines] (list 'ln text (concat (list 'fn []) code-lines) false))
 (def ev event)
 (defn run [revent] (.trigger (Story/instance) (ev revent)))
+(defn runafter [revent] (.queue (Story/instance) (ev revent)))
 
 
 
