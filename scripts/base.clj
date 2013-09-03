@@ -91,10 +91,13 @@
 
 ;; shortcuts
 (def bind add-event)
+(defmacro bindf [ename & code-lines] (list 'bind ename (concat (list 'fn []) code-lines)))
 (defn t [text & args] (apply make-dialog (concat (list text false) args)))
 (defn tr [text & args] (apply make-dialog (concat (list text true) args)))
 (def ln dialog-line)
 (defn lnh [text ev] (ln text ev false))
+(defmacro lnf [text & code-lines] (list 'ln text (concat (list 'fn []) code-lines)))
+(defmacro lnhf [text & code-lines] (list 'ln text (concat (list 'fn []) code-lines) false))
 (def ev event)
 (defn run [revent] (.trigger (Story/instance) (ev revent)))
 
