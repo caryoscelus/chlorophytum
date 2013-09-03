@@ -67,19 +67,7 @@ public class StoryStage extends Stage {
         return r;
     }
     
-    /**
-     * Setup storyStage from dialogue.
-     * This is quite a mess, needs lots of refactoring
-     */
-    public void setupUi (final StoryDialog dialogue) {
-        final Skin skin = UiManager.instance().skin;
-        final Table table = new Table();
-        table.setFillParent(true);
-        
-        final Window winDialog = new Window("----", skin);
-        table.add(winDialog).width(600).height(400);
-        
-        String labelText = dialogue.text;
+    protected String[] parseAll (String labelText) {
         // remove superflous white space
         labelText = labelText.replace("\t", " ");
         labelText = labelText.replace("\n", " ");
@@ -92,8 +80,27 @@ public class StoryStage extends Stage {
         
         // now check if we should display a picture
         String[] t = parse(labelText, "<img:", ">");
-        labelText = t[0];
-        String img = t[1];
+        
+        // at this point t = [labelText, img], and that's what we need for now!
+        return t;
+    }
+    
+    /**
+     * Setup storyStage from dialogue.
+     * This is quite a mess, needs lots of refactoring
+     */
+    public void setupUi (final StoryDialog dialogue) {
+        final Skin skin = UiManager.instance().skin;
+        final Table table = new Table();
+        table.setFillParent(true);
+        
+        final Window winDialog = new Window("----", skin);
+        table.add(winDialog).width(600).height(400);
+        
+        String[] parsed = parseAll(dialogue.text);
+        
+        String labelText = parsed[0];
+        String img = parsed[1];
         
         if (img != null) {
             final Image image = new Image(new Texture(Gdx.files.internal(img)));
