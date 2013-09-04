@@ -7,6 +7,10 @@ Building
 --------
 Put clojure and libgdx jars into libs/ directory and run ant.
 
+Javadocs
+--------
+http://caryoscelus.github.io/chlorophytum/doc/index.html
+
 License
 -------
 GPL3+
