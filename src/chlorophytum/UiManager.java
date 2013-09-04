@@ -44,7 +44,15 @@ public class UiManager {
         return _instance;
     }
     
-    public Skin skin;
+    protected Skin defaultSkin;
+    
+    public Skin skin () {
+        return defaultSkin;
+    }
+    
+    public void setSkin (Skin skin) {
+        defaultSkin = skin;
+    }
     
     /**
      * Init; probably move to constructor? 
@@ -56,10 +64,17 @@ public class UiManager {
     /**
      * Init default skins
      */
-    void initUiSkins () {
+    protected void initUiSkins () {
+        loadSomeSkin();
+    }
+    
+    /**
+     * @deprecated
+     */
+    protected void loadSomeSkin () {
         // A skin can be loaded via JSON or defined programmatically, either is fine. Using a skin is optional but strongly
         // recommended solely for the convenience of getting a texture, region, etc as a drawable, tinted drawable, etc.
-        skin = new Skin();
+        Skin skin = new Skin();
         
         // Generate a 1x1 white texture and store it in the skin named "white".
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -89,5 +104,7 @@ public class UiManager {
         windowStyle.titleFont = skin.getFont("default");
         windowStyle.background = skin.newDrawable("white", Color.LIGHT_GRAY);
         skin.add("default", windowStyle);
+        
+        defaultSkin = skin;
     }
 }

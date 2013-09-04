@@ -45,7 +45,7 @@ public class CreditsStage extends Stage {
      * Build ui
      */
     public void updateUi() {
-        final Skin skin = UiManager.instance().skin;
+        final Skin skin = UiManager.instance().skin();
         final Table table = new Table();
         table.setFillParent(true);
         

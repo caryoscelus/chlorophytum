@@ -104,7 +104,7 @@ public class StoryStage extends Stage {
      * This is quite a mess, needs lots of refactoring
      */
     protected void setupUi (StoryContext piece) {
-        final Skin skin = UiManager.instance().skin;
+        final Skin skin = UiManager.instance().skin();
         final Table table = new Table();
         table.setFillParent(true);
         
