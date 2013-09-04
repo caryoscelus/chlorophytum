@@ -31,18 +31,16 @@ import chlorophytum.util.Invokable;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * Credits screen.
  * Probably need to separate view (stage) and screen itself
  */
-public class CreditsScreen implements Screen {
+public class CreditsScreen implements Screen, AbstractCreditsScreen {
     protected boolean inited = false;
     protected CreditsData creditsData = new CreditsData();
     
-    protected Stage stage;
+    protected CreditsStage stage;
     
     /**
      * What to do when this screen should be exited.
@@ -91,42 +89,8 @@ public class CreditsScreen implements Screen {
     }
     
     protected void initUi () {
-        stage = new Stage();
-        updateUi();
-    }
-    
-    /**
-     * Build ui
-     */
-    protected void updateUi() {
-        final Skin skin = UiManager.instance().skin;
-        final Table table = new Table();
-        table.setFillParent(true);
-        
-        stage.clear();
-        stage.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                processClick();
-            }
-        });
-        Gdx.input.setInputProcessor(stage);
-        
-        for (CreditsSection section : creditsData.sections) {
-            final Label sectionLabel = new Label(section.name, skin);
-            table.add(sectionLabel).colspan(2).center().space(20);
-            table.row();
-            
-            for (CreditsSection.Line line : section.authors) {
-                final Label authorLabel = new Label(line.name, skin);
-                final Label occupationLabel = new Label(line.occupation, skin);
-                table.add(authorLabel).right().space(10);
-                table.add(occupationLabel).left().space(10);
-                table.row();
-            }
-        }
-        
-        stage.addActor(table);
+        stage = new CreditsStage(this, creditsData);
+        stage.updateUi();
     }
     
     /**
@@ -147,6 +111,7 @@ public class CreditsScreen implements Screen {
      * User clicked on stage.
      * Currently triggers onExit
      */
+    @Override
     public void processClick () {
         if (onExit != null) {
             onExit.invoke();
