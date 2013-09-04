@@ -29,6 +29,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.files.FileHandle;
 
 
 /**
@@ -55,23 +56,18 @@ public class UiManager {
     }
     
     /**
-     * Init; probably move to constructor? 
+     * Load skin from json file.
+     * @param f FileHandle containing json skin
      */
-    public void init () {
-        initUiSkins();
-    }
-    
-    /**
-     * Init default skins
-     */
-    protected void initUiSkins () {
-        loadSomeSkin();
+    public void loadSkin (FileHandle f) {
+        Skin skin = new Skin(f);
+        defaultSkin = skin;
     }
     
     /**
      * @deprecated
      */
-    protected void loadSomeSkin () {
+    public void loadDefaultSkin () {
         // A skin can be loaded via JSON or defined programmatically, either is fine. Using a skin is optional but strongly
         // recommended solely for the convenience of getting a texture, region, etc as a drawable, tinted drawable, etc.
         Skin skin = new Skin();
