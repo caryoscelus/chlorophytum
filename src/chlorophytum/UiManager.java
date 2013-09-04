@@ -65,6 +65,9 @@ public class UiManager {
     }
     
     /**
+     * Build skin programmatically.
+     * Please use loadSkin() if possible. This can be removed
+     * eventually.
      * @deprecated
      */
     public void loadDefaultSkin () {
