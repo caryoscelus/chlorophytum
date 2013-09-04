@@ -73,6 +73,10 @@
           (empty? xy) (.moveTo object new-map)
           :else (.moveTo object new-map (first xy) (second xy))))
 
+(defn self-move [dx dy]
+      (let [self (.getObject (.story (World/instance)) "self")]
+           (.move self dx dy)))
+
 (defn change-map [map-name & xy]
       (let [self (.getObject (.story (World/instance)) "self")]
            (apply object-move (concat (list self map-name) xy))))
