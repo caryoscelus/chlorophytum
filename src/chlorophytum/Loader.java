@@ -47,6 +47,17 @@ public class Loader {
         return _instance;
     }
     
+    protected String mapPath = ".";
+    protected String mapExt = ".tmx";
+    
+    /**
+     * Setup search path for map
+     */
+    public void setMapPath (String path, String ext) {
+        mapPath = path;
+        mapExt = ext;
+    }
+    
     /**
      * Load any local file by filename
      * @param fname relative file name
@@ -57,14 +68,16 @@ public class Loader {
     
     /**
      * load map if necessary and return it.
-     * Use World.loadMap() instaed
-     * @param fname relative file name
+     * Use World.loadMap() instead
+     * @param name map name
      */
-    public TiledMap loadMap (String fname) {
-        TiledMap map = maps.get(fname);
+    public TiledMap loadMap (String name) {
+        TiledMap map = maps.get(name);
         if (map == null) {
+            // !
+            String fname = mapPath+"/"+name+mapExt;
             map = new TmxMapLoader().load(fname);
-            maps.put(fname, map);
+            maps.put(name, map);
         }
         return map;
     }

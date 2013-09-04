@@ -52,9 +52,9 @@ public class World {
     
     /**
      * Load map or get it if it's already loaded.
-     * Note that currently name is file name, but
-     * that is likely to be changed
-     * @param name File name of map to load
+     * @param name Map name: filename without extension and path
+     * (which is set in Loader)
+     * @return loaded map
      */
     public ChloroMap loadMap (String name) {
         ChloroMap map = maps.get(name);
