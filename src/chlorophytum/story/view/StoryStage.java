@@ -139,7 +139,7 @@ public class StoryStage extends Stage {
                     }
                 });
                 winDialog.row();
-                winDialog.add(button).pad(2);
+                winDialog.add(button).padBottom(8).padLeft(8).padRight(8).fillX();
             }
         }
         
