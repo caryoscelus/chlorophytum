@@ -31,13 +31,29 @@ import java.util.Vector;
  * Contains info about author, that is name and all occupations
  */
 public class CreditsAuthor {
+    /**
+     * Author's name
+     */
     public final String name;
+    
+    /**
+     * List of author's occupations
+     */
     public final Vector<String> occupations = new Vector();
     
+    /**
+     * Create author with name
+     * @param nm name
+     */
     public CreditsAuthor (String nm) {
         name = nm;
     }
     
+    /**
+     * Create author with name and occupation
+     * @param nm author name
+     * @param occupation one of author's occupations
+     */
     public CreditsAuthor (String nm, String occupation) {
         name = nm;
         occupations.add(occupation);
@@ -45,6 +61,7 @@ public class CreditsAuthor {
     
     /**
      * Add occupation for this author
+     * @param occupation new occupation
      */
     public void addOccupation (String occupation) {
         occupations.add(occupation);

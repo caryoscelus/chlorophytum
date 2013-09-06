@@ -25,6 +25,12 @@
 
 package chlorophytum.credits;
 
+/**
+ * Interface used by CreditsStage to process input
+ */
 public interface AbstractCreditsScreen {
+    /**
+     * Called when user clicked on credit stage
+     */
     public void processClick ();
 }

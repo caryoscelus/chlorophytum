@@ -116,6 +116,9 @@ public class MapObject extends StoryObject {
         moveTo(mapName, xy.x, xy.y);
     }
     
+    /**
+     * Move to given map
+     */
     public void moveTo (ChloroMap map) {
         Vector2 xy = mapPositions.get(map);
         float x, y;
@@ -130,6 +133,9 @@ public class MapObject extends StoryObject {
         moveTo(map, x, y);
     }
     
+    /**
+     * Move to map and given coords
+     */
     public void moveTo (ChloroMap map, float x, float y) {
         if (onMap != map) {
             if (onMap != null) {

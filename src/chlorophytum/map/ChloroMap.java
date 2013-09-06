@@ -50,10 +50,20 @@ public class ChloroMap implements Disposable {
         }
     }
     
+    /**
+     * Get layer by id.
+     * Who uses ids? If nobody, this can be safely removed..
+     * @deprecated
+     */
     public MapLayer getLayer (int lid) {
         return map.getLayers().get(lid);
     }
     
+    /**
+     * Get layer by name
+     * @param name name of layer to get
+     * @return tiled's MapLayer if present
+     */
     public MapLayer getLayer (String name) {
         return map.getLayers().get(name);
     }

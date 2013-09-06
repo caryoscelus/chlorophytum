@@ -76,14 +76,19 @@ public class ChloroMapStage extends Stage {
         setCamera(camera);
     }
     
+    /**
+     * Number of tiles on map
+     * @return Vector2 with size of this map in tiles
+     */
     public Vector2 tilesOnMap () {
         return new Vector2(tilesNX, tilesNY);
     }
     
     /**
-     * 
+     * Should be called when map was changed.
+     * At the moment, called by act() every time
      */
-    public void mapChange () {
+    protected void mapChange () {
         Set<MapObject> myOnly = ((HashMap<MapObject,MapObjectView>) objectViews.clone()).keySet();
         myOnly.removeAll(map.objects);
         HashSet<MapObject> mapOnly = (HashSet<MapObject>) map.objects.clone();
