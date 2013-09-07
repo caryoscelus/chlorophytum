@@ -73,7 +73,7 @@ public class StoryStage extends Stage {
         // remove superflous white space
         labelText = labelText.replace("\t", " ");
         labelText = labelText.replace("\n", " ");
-        while (labelText.matches("  ")) {
+        while (labelText.matches(".*  .*")) {
             labelText = labelText.replace("  ", " ");
         }
         
