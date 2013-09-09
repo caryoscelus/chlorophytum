@@ -46,7 +46,7 @@ import java.util.HashMap;
 public class MapObject extends StoryObject {
     public ChloroMap onMap = null;
     public final Vector2 position = new Vector2();
-    public final Vector2 move = new Vector2();
+    public final Vector2 wantMove = new Vector2();
     
     protected Map<ChloroMap, Vector2> mapPositions = new HashMap();
     
