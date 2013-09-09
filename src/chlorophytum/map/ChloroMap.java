@@ -51,6 +51,15 @@ public class ChloroMap implements Disposable {
     }
     
     /**
+     * Update this map and all objects on it.
+     */
+    public void update (float dt) {
+        for (MapObject object : objects) {
+            object.update(dt);
+        }
+    }
+    
+    /**
      * Get layer by id.
      * Who uses ids? If nobody, this can be safely removed..
      * @deprecated
